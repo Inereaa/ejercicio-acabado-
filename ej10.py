@@ -1,5 +1,6 @@
 class Habitacion():
-    def __init__(self, largo, ancho, ventanas, puertas):
+    def __init__(self, num, largo, ancho, ventanas, puertas):
+        self.__num=num
         self.__largo=largo
         self.__ancho=ancho
         self.__ventanas=ventanas
@@ -7,6 +8,8 @@ class Habitacion():
         self.__color="blanco"
         self.__esdorm=False
 
+    def set_num(self, num):
+        self.__num=num
     def set_largo(self, largo):
         self.__largo=largo
     def set_ancho(self, ancho):
@@ -20,7 +23,8 @@ class Habitacion():
     def set_esdorm (self, esdorm):
         self.__esdorm=esdorm
 
-
+    def get_num(self):
+        return self.__num
     def get_largo(self):
         return self.__largo
     def get_ancho(self):
@@ -36,42 +40,54 @@ class Habitacion():
     
 
 class Dormitorio(Habitacion):
-    def __init__ (self, camas, largo, ancho, ventanas, puertas):
+    def __init__ (self, camas, num, largo, ancho, ventanas, puertas):
         self.__camas=camas
-        super().__init__(largo, ancho, ventanas, puertas)
+        self.__color="blanco"
+        super().__init__(num, largo, ancho, ventanas, puertas)
     def set_camas (self, camas):
         self.__camas=camas
     def get_camas (self):
         return self.__camas
-        
+    
+    def pintar(self, color):
+        self.__color=color
+    def get_color(self):
+        return self.__color
+    
 
 
 def datos_hab(lista):
+        num=input("Introduzca el número de la habitación:")
         largo=input("Introduzca el largo de la habitación (EN METROS):")
         ancho=input("Introduzca el ancho de la habitación (EN METROS):")
         ventanas=input("Introduzca el número de ventanas que tiene la habitación:")
         puertas=input("Introduzca el número de puertas que tiene la habitación:")
+        
+    
         preg=input("¿Desea pintar la habitación? Introduzca 1 para SÍ, o introduzca 2 para NO:")
-
         if preg=="1":
             color=input("Introduzca el color del que quiera pintar la habitación:")
-            miHabitacion=Habitacion(largo, ancho, ventanas, puertas)
+            miHabitacion=Habitacion(num, largo, ancho, ventanas, puertas)
             miHabitacion.pintar(color)
         elif preg=="2":
             print ("Ha decidido no pintar la habitación, por lo que se quedará de color blanco.")
-            miHabitacion=Habitacion(largo, ancho, ventanas, puertas)
         else:
             print ("Dato introducido no válido.")
         
-        extra=input("¿La habitación es un dormitorio? Introduzca 1 para SÍ, o introduzca 2 para NO:")
+        global extra
+        extra=input("¿La habitación tiene dormitorio? Introduzca 1 para SÍ, o introduzca 2 para NO:")
         if extra=="1":
             camas=input("Introduzca el número de camas que tiene el dormitorio:")
             global miDormitorio
-            miDormitorio=Dormitorio(camas, largo, ancho, ventanas, puertas)
+            miDormitorio=Dormitorio(camas, num, largo, ancho, ventanas, puertas)
             miDormitorio.set_esdorm(True)
+            if preg=="1":
+                miDormitorio.pintar(color)
             lista.append(miDormitorio)
         elif extra=="2":
-            miHabitacion=Habitacion(largo, ancho, ventanas, puertas)
+            miHabitacion=Habitacion(num, largo, ancho, ventanas, puertas)
+            if preg=="1":
+                miHabitacion.pintar(color)
             lista.append(miHabitacion)
         else:
             print ("Dato introducido no válido.")
@@ -91,14 +107,16 @@ def modificar_hab(lista):
 def fin_programa(lista):
     print ("Ha decidido finalizar el programa.")
     for x in range (0, len(lista)):
-        print ("Esta habitación tiene", (lista[x].get_largo()), "metros de largo.")
-        print ("Esta habitación tiene", (lista[x].get_ancho()), "metros de ancho.")
-        print ("Esta habitación tiene", (lista[x].get_ventanas()), "ventanas.")
-        print ("Esta habitación tiene", (lista[x].get_puertas()), "puertas.")
-        print ("Esta habitación está pintada de color", (lista[x].get_color()),".")
-        if miDormitorio.get_esdorm()==True:
-            print ("Este dormitorio tiene", (lista[x].get_camas()), "camas.")
-
+        print ("Los datos siguientes son de la habitación número", (lista[x].get_num()),":")
+        print ("Esta habitación tiene", (lista[x].get_largo()), "metros de largo")
+        print ("Esta habitación tiene", (lista[x].get_ancho()), "metros de ancho")
+        print ("Esta habitación tiene", (lista[x].get_ventanas()), "ventanas")
+        print ("Esta habitación tiene", (lista[x].get_puertas()), "puertas")
+        if extra=="2":
+            print ("Esta habitación está pintada de color", (lista[x].get_color()))
+        if extra=="1":
+            print ("Esta habitación está pintada de color", (lista[x].get_color()))
+            print ("Además, esta habitación tiene dormitorio, y este tiene", (lista[x].get_camas()), "camas")
 
 def main():
     lista=[]
@@ -117,6 +135,7 @@ def main():
 
         elif respuesta=="4":
             fin_programa(lista)
+
             break ;
         
         else:
