@@ -67,6 +67,7 @@ def datos_hab(lista):
         preg=input("¿Desea pintar la habitación? Introduzca 1 para SÍ, o introduzca 2 para NO:")
         if preg=="1":
             color=input("Introduzca el color del que quiera pintar la habitación:")
+            global miHabitacion
             miHabitacion=Habitacion(num, largo, ancho, ventanas, puertas)
             miHabitacion.pintar(color)
         elif preg=="2":
@@ -95,12 +96,46 @@ def datos_hab(lista):
 
 
 def eliminar_hab(lista):
-    print ("Introduzca ")
+    borrar_hab=input("Introduzca el número de la habitación que desea eliminar:")
+    if borrar_hab==miHabitacion.get_num():
+        lista.remove(miHabitacion)
+        print ("Habitación número", (miHabitacion.get_num()), "eliminada con éxito.")
+    elif borrar_hab==miDormitorio.get_num():
+        lista.remove(miDormitorio)
+    else:
+        print ("El número de habitación introducida no existe o esta ya ha sido eliminada.")
 
 
 
 def modificar_hab(lista):
-    print ("Introduzca ")
+    nombre_hab=input("Introduzca el número de la habitación que desea modificar:")
+    if nombre_hab==miHabitacion.get_num():
+        print ("Los datos siguientes son de la habitación número", (miHabitacion.get_num()), ":")
+        print ((miHabitacion.get_largo()), "metros de largo")
+        print ((miHabitacion.get_ancho()), "metros de ancho")
+        print ((miHabitacion.get_ventanas()), "ventanas")
+        print ((miHabitacion.get_puertas()), "puertas")
+        if extra=="1":
+            print ((miDormitorio.get_camas()), "puertas")
+        elif extra=="2":
+            print ("Y no tiene camas, pues no tiene dormitorio.")
+
+        largo=input("Introduzca el nuevo largo de la habitación (EN METROS):")
+        miHabitacion.set_largo(largo)
+        ancho=input("Introduzca el nuevo ancho de la habitación (EN METROS):")
+        miHabitacion.set_ancho(ancho)
+        ventanas=input("Introduzca el número de ventanas de la habitación:")
+        miHabitacion.set_ventanas(ventanas)
+        puertas=input("Introduzca el número de puertas de la habitación:")
+        miHabitacion.set_puertas(puertas)
+        if extra=="1":
+            camas=input("Introduzca el nuevo número de camas del dormitorio:")
+            miDormitorio.set_camas(camas)
+        elif extra=="2":
+            print ("Y no se puede modificar el número de camas, pues no tiene dormitorio.")
+
+    else:
+        print("Ha introducido un número de habitación no existente.")
 
 
 
