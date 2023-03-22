@@ -63,11 +63,12 @@ def datos_hab(lista):
         ventanas=input("Introduzca el número de ventanas que tiene la habitación:")
         puertas=input("Introduzca el número de puertas que tiene la habitación:")
         
+        global miHabitacion
+        miHabitacion=Habitacion(num, largo, ancho, ventanas, puertas)
     
         preg=input("¿Desea pintar la habitación? Introduzca 1 para SÍ, o introduzca 2 para NO:")
         if preg=="1":
             color=input("Introduzca el color del que quiera pintar la habitación:")
-            global miHabitacion
             miHabitacion=Habitacion(num, largo, ancho, ventanas, puertas)
             miHabitacion.pintar(color)
         elif preg=="2":
@@ -116,7 +117,7 @@ def modificar_hab(lista):
         print ((miHabitacion.get_ventanas()), "ventanas")
         print ((miHabitacion.get_puertas()), "puertas")
         if extra=="1":
-            print ((miDormitorio.get_camas()), "puertas")
+            print ((miDormitorio.get_camas()), "camas")
         elif extra=="2":
             print ("Y no tiene camas, pues no tiene dormitorio.")
 
